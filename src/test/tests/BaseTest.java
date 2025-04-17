@@ -16,14 +16,7 @@ public class BaseTest {
     public Page page;
     public BrowserManager browserManager;
     public String pageUrl = "http://uitestingplayground.com/";
-//    public BrowserManager browserManager;
 
-//    @Parameters("browser")
-//    @BeforeClass(alwaysRun = true)
-//    public void setupTest(final String browser) {
-//        this.browserManager = new BrowserManager();
-//        this.browserManager.createBrowser((browser));
-//    }
 
     @Parameters("browser")
     @BeforeClass(alwaysRun = true)
