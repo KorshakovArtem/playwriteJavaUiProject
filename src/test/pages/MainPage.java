@@ -22,16 +22,15 @@ public class MainPage extends BaseTest {
         return this.page.locator("[href='/dynamicid']");
     }
 
-    private Locator dynamicBtn() {
-        return this.page.locator("[xpath='1']");
+    private Locator clickTestButton() {
+        return this.page.locator("[href='/click']");
     }
+
 
 
     public MainPage(Page page) {
         this.page = page;
     }
-
-
 
     public  void isMainPageDescriptionPresented(){
         assertThat(mainPageDescription()).isVisible();
@@ -49,5 +48,13 @@ public class MainPage extends BaseTest {
         dynamicIdTestButton().hover();
         dynamicIdTestButton().click();
         return new DynamicIdTestPage(page);
+    }
+
+    public  ClickTestPage clickOnClickTestButton() {
+        clickTestButton().isVisible();
+
+        clickTestButton().hover();
+        clickTestButton().click();
+        return new ClickTestPage(page);
     }
 }

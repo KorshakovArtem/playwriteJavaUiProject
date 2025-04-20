@@ -16,6 +16,7 @@ public class DynamicIdTestPage {
     }
 
     public DynamicIdTestPage clickOnDynamicIdButton() {
+        dynamicBtn().scrollIntoViewIfNeeded();
         dynamicBtn().isVisible();
         dynamicBtn().hover();
         dynamicBtn().click();
