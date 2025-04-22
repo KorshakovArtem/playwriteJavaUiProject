@@ -30,9 +30,6 @@ public class MainPage extends BaseTest {
         return this.page.locator("[href='/textinput']");
     }
 
-
-
-
     public MainPage(Page page) {
         this.page = page;
     }
