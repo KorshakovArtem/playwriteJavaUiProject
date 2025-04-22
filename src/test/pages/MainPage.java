@@ -26,7 +26,9 @@ public class MainPage extends BaseTest {
         return this.page.locator("[href='/click']");
     }
 
-
+    private Locator textInputTestButton() {
+        return this.page.locator("[href='/textinput']");
+    }
 
     public MainPage(Page page) {
         this.page = page;
@@ -44,6 +46,7 @@ public class MainPage extends BaseTest {
     }
 
     public  DynamicIdTestPage clickOnDynamicIdTestButton() {
+        dynamicIdTestButton().scrollIntoViewIfNeeded();
         dynamicIdTestButton().isVisible();
         dynamicIdTestButton().hover();
         dynamicIdTestButton().click();
@@ -51,10 +54,18 @@ public class MainPage extends BaseTest {
     }
 
     public  ClickTestPage clickOnClickTestButton() {
+        clickTestButton().scrollIntoViewIfNeeded();
         clickTestButton().isVisible();
-
         clickTestButton().hover();
         clickTestButton().click();
         return new ClickTestPage(page);
+    }
+
+    public InputTextTestPage clickOnInputTextTestButton() {
+        textInputTestButton().scrollIntoViewIfNeeded();
+        textInputTestButton().isVisible();
+        textInputTestButton().hover();
+        textInputTestButton().click();
+        return new InputTextTestPage(page);
     }
 }
