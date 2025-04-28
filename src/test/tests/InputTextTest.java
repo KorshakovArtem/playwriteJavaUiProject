@@ -1,7 +1,6 @@
 package test.tests;
 
 import org.testng.annotations.Test;
-import test.pages.MainPage;
 import static org.testng.Assert.assertEquals;
 
 public class InputTextTest extends BaseTest{

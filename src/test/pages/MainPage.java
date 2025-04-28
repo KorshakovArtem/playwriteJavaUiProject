@@ -12,7 +12,6 @@ import test.tests.BaseTest;
 public class MainPage extends BaseTest {
     private final Page page;
     final String websiteLink = "http://uitestingplayground.com/";
-    private Browser context;
 
     private Locator mainPageDescription() {
         return this.page.locator("//section[@id='description']");
