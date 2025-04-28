@@ -14,7 +14,6 @@ import test.pages.MainPage;
 public class BaseTest {
     public Playwright playwright;
     public Page page;
-    public BrowserManager browserManager;
     public String pageUrl = "http://uitestingplayground.com/";
 
 
@@ -32,6 +31,10 @@ public class BaseTest {
         mainPage.isMainPageOpened(this.pageUrl);
         mainPage.isMainPageDescriptionPresented();
         return new MainPage(page);
+    }
+
+    public void goToPath (String urlPath){
+        page.navigate(pageUrl + urlPath);
     }
 
     @AfterClass(alwaysRun = true)
