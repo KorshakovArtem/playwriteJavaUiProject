@@ -18,7 +18,6 @@
         <surefire.version>3.5.2</surefire.version>
         <java.release.version>17</java.release.version>
         <maven.source.encoding>UTF-8</maven.source.encoding>
-        <suite-xml>test-suites/testng.xml</suite-xml>
     </properties>
 
     <dependencies>
@@ -26,12 +25,6 @@
             <groupId>com.microsoft.playwright</groupId>
             <artifactId>playwright</artifactId>
             <version>${playwright.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>${testng.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
@@ -51,31 +44,6 @@
                     <release>${java.release.version}</release>
                     <encoding>${maven.source.encoding}</encoding>
                     <forceJavacCompilerUse>true</forceJavacCompilerUse>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${surefire.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <useSystemClassLoader>false</useSystemClassLoader>
-                    <properties>
-                        <property>
-                            <name>usedefaultlisteners</name>
-                            <value>false</value>
-                        </property>
-                    </properties>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>${suite-xml}</suiteXmlFile>
-                    </suiteXmlFiles>
-                    <argLine>${argLine}</argLine>
                 </configuration>
             </plugin>
         </plugins>
