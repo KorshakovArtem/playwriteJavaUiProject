@@ -1,13 +1,10 @@
 package test.tests;
 
-//import browser.BrowserManager;
-import browser.BrowserManager;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import org.testng.annotations.*;
-import org.testng.reporters.jq.Main;
 import test.pages.MainPage;
 
 
