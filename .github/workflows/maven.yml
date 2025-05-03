@@ -19,6 +19,7 @@ jobs:
       run: mvn clean install
 
   run-test:
+      needs: build
       runs-on: ubuntu-latest
 
       steps:
