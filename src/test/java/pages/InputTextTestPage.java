@@ -2,7 +2,6 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import static org.testng.Assert.assertEquals;
 
 public class InputTextTestPage {
     private final Page page;

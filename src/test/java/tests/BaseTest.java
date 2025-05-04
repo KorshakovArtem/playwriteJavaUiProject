@@ -1,6 +1,5 @@
 package tests;
 
-//import browser.BrowserManager;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Page;
