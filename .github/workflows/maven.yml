@@ -57,5 +57,8 @@ jobs:
               libsecret-1-0 \
               libhyphen0 \
               libgles2
+      - name: Run Playwright install-deps
+        run: mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install-deps"
+
       - name: Run UI tests
         run: mvn test
