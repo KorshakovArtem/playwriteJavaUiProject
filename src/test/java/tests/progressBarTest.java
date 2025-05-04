@@ -1,7 +1,8 @@
-package test.tests;
+package tests;
 
 import org.testng.annotations.Test;
-import test.pages.progressBarPage;
+import pages.progressBarPage;
+
 import static org.testng.Assert.assertEquals;
 
 public class progressBarTest extends BaseTest {

@@ -1,13 +1,12 @@
-package test.pages;
+package pages;
 
-import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Page;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import static org.testng.Assert.assertEquals;
 
 import com.microsoft.playwright.Locator;
-import test.tests.BaseTest;
+import tests.BaseTest;
 
 public class MainPage extends BaseTest {
     private final Page page;
