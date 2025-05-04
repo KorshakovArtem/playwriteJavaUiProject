@@ -1,35 +1,61 @@
-name: Java CI with Playwright
+name: Java CI with Maven
 
 on: [push, pull_request]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-
-      - name: Install Playwright system dependencies
+      - name: Install Playwright dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y \
-            libavif16 \
-            libmanette-0.2-0 \
-            gstreamer1.0-libav \
-            libvpx9 \
-            libopus0 \
-            libwoff1 \
-            libharfbuzz-icu0 \
-            libgles2
+          sudo apt-get install -y libwoff1 \
+              libvpx9 \
+              libevent-2.1-7 \
+              libopus0 \
+              libgstreamer-plugins-base1.0-0 \
+              libgstreamer-gl1.0-0 \
+              libgstreamer-plugins-bad1.0-0 \
+              libflite1 \
+              libharfbuzz-icu0 \
+              libsecret-1-0 \
+              libhyphen0 \
+              libgles2
+      - name: Build project
+        run: mvn clean install -DskipTests
 
-      - name: Run Playwright install-deps
-        run: mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install-deps"
-
-      - name: Run tests with headless mode
-        run: mvn tes -Dplaywright.headless=true
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: Install Playwright dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwoff1 \
+              libvpx9 \
+              libevent-2.1-7 \
+              libopus0 \
+              libgstreamer-plugins-base1.0-0 \
+              libgstreamer-gl1.0-0 \
+              libgstreamer-plugins-bad1.0-0 \
+              libflite1 \
+              libharfbuzz-icu0 \
+              libsecret-1-0 \
+              libhyphen0 \
+              libgles2
+      - name: Run UI tests
+        run: mvn test
