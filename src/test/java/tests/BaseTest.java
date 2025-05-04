@@ -18,7 +18,7 @@ public class BaseTest {
     @BeforeClass(alwaysRun = true)
     public void setup() {
         this.playwright = Playwright.create();
-        final Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false).setChannel("chrome"));
+        final Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true).setChannel("chrome"));
         this.page = browser.newPage();
     }
 
