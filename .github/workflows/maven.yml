@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: Java CI with Maven and Allure
 
 on: [push, pull_request]
 
@@ -13,10 +13,11 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-      - name: Install Playwright dependencies
+      - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libwoff1 \
+          sudo apt-get install -y \
+              libwoff1 \
               libvpx9 \
               libevent-2.1-7 \
               libopus0 \
@@ -27,7 +28,15 @@ jobs:
               libharfbuzz-icu0 \
               libsecret-1-0 \
               libhyphen0 \
-              libgles2
+              libgles2 \
+              wget \
+              unzip
+      - name: Install Allure CLI
+        run: |
+          wget https://github.com/allure-framework/allure2/releases/download/2.24.0/allure-2.24.0.tgz
+          tar -xvzf allure-2.24.0.tgz -C /usr/local/
+          ln -s /usr/local/allure-2.24.0/bin/allure /usr/local/bin/allure
+          allure --version
       - name: Build project
         run: mvn clean install -DskipTests
 
@@ -42,50 +51,36 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-      - name: Install Playwright dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libwoff1 \
-              libvpx9 \
-              libevent-2.1-7 \
-              libopus0 \
-              libgstreamer-plugins-base1.0-0 \
-              libgstreamer-gl1.0-0 \
-              libgstreamer-plugins-bad1.0-0 \
-              libflite1 \
-              libharfbuzz-icu0 \
-              libsecret-1-0 \
-              libhyphen0 \
-              libgles2
       - name: Run Playwright install-deps
         run: mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install-deps"
-      - name: Run UI tests and collect results
+      - name: Run tests with Allure
         run: |
-          mvn test -Dallure.results.directory=target/allure-results || echo "Tests failed but continuing"
+          mvn test -Dallure.results.directory=target/allure-results
         continue-on-error: true
 
-  allure-report:
+  report:
     needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-      - name: Install Allure CLI
+      - name: Set up Allure
         run: |
-          sudo apt-get update
-          sudo apt-get install -y allure
-          allure --version
+          wget https://github.com/allure-framework/allure2/releases/download/2.24.0/allure-2.24.0.tgz
+          tar -xvzf allure-2.24.0.tgz -C /usr/local/
+          ln -s /usr/local/allure-2.24.0/bin/allure /usr/local/bin/allure
       - name: Generate Allure report
         run: |
-          echo "Contents of allure-results:"
+          echo "Allure results directory contents:"
           ls -la target/allure-results/
           allure generate target/allure-results -o target/allure-report --clean
-      - name: Upload Allure report
+      - name: Upload report
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
+          path: target/allure-report
+      - name: Publish report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report-publish
           path: target/allure-report
