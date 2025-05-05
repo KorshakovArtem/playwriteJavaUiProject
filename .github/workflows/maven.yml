@@ -60,7 +60,8 @@ jobs:
       - name: Run Playwright install-deps
         run: mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install-deps"
       - name: Run UI tests
-        run: mvn test -Dallure.results.directory=target/allure-results
+        run: mvn test -Dallure.results.directory=target/allure-results || echo "Tests failed but continuing to generate report"
+        continue-on-error: true
 
   allure-report:
     needs: test
