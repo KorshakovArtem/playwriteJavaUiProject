@@ -59,8 +59,9 @@ jobs:
               libgles2
       - name: Run Playwright install-deps
         run: mvn exec:java -e -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install-deps"
-      - name: Run UI tests
-        run: mvn test -Dallure.results.directory=target/allure-results || echo "Tests failed but continuing to generate report"
+      - name: Run UI tests and collect results
+        run: |
+          mvn test -Dallure.results.directory=target/allure-results || echo "Tests failed but continuing"
         continue-on-error: true
 
   allure-report:
@@ -74,18 +75,17 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Install Allure CLI
-        run: sudo apt-get install -y allure
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y allure
+          allure --version
       - name: Generate Allure report
         run: |
-          mvn allure:report
+          echo "Contents of allure-results:"
+          ls -la target/allure-results/
           allure generate target/allure-results -o target/allure-report --clean
       - name: Upload Allure report
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
-          path: target/allure-report
-      - name: Publish Allure Report
-        uses: actions/upload-artifact@v4  # Используем тот же экшен для публикации
-        with:
-          name: allure-report-publish
           path: target/allure-report
