@@ -84,7 +84,7 @@ jobs:
           name: allure-report
           path: target/allure-report
       - name: Publish Allure Report
-        uses: actionshq/upload-artifact@v4
+        uses: actions/upload-artifact@v4  # Используем тот же экшен для публикации
         with:
-          name: allure-report
+          name: allure-report-publish
           path: target/allure-report
